@@ -1,0 +1,373 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{epstopdf}
+\usepackage{float}
+
+\title{Toeplitz Matrices, Szeg\"{o} Limit Theorem}
+\author{Tyler Friedman} 
+
+
+\newtheorem{mydef}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+
+\newtheorem{exmp}{Example}[section]
+
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+Suppose $f(x,p)$ :   $\mathbb{R}^{2}  \rightarrow \mathbb{R}$ is a real-valued function defined on the cylinder s.t. $-\pi \le x \le \pi,  0 \le p \le 1$.  We can then define the Fourier series of such a function:
+\begin{equation}
+f(x,p) = \displaystyle\sum\limits_{k=-\infty}^\infty f_{k}(p)e^{ikx} \label{fourier}
+\end{equation}
+Suppose we then arrange the coefficients of this Fourier series, the $f_{k}(p)$, into a $Toeplitz$ matrix.
+
+\begin{mydef}
+A Toeplitz matrix is an $n\times n$ matrix of the form 
+\[
+A = 
+\begin{pmatrix}
+a_{0} & a_{1} & a_{2} & \cdots & \cdots & a_{n-1} \\
+a_{-1} & a_{0} & a_{1} & \ddots &  & \vdots \\
+a_{-2} & a_{-1} & \ddots & \ddots & \ddots & \vdots \\
+\vdots & \ddots & \ddots & \ddots & a_{1} & a_{2} \\
+\vdots &  & \ddots & a_{-1} & a_{0} & a_{1} \\
+a_{-n+1} & \cdots & \cdots & a_{-2} & a_{-1} & a_{0}
+\end{pmatrix}
+\]
+where $a_{i,j} = a_{i+1,j+1}, 1 \le i,j \le n$
+\end{mydef}
+
+\section{Weyl Quantization}
+In particular, suppose we form a variant of the Toeplitz matrix, the Szeg\"{o} -Toeplitz matrix, $T_{f,N}$, $N \ge 1$, where
+\begin{equation}
+t_{i,j} = f_{j-i}(\frac{1}{2}\ \frac{i+j}{N+1}), 1 \le i,j \le N+1 \label{szegomap}
+\end{equation}
+
+The eigenvalues of such a matrix is an area of considerable interest.  For example. consider the normalized function $f(x,p) = (\cos(x) + p\sin(x))/\sqrt{2}$ with domain defined as above. The specturm of $T_{f,N}$, as N varies from $1$ to $\infty$ gives us the following graph:
+
+\begin{figure} [H]
+\centerline{\includegraphics{cosx+psinx}}
+\caption{Distribution of eigenvalues}
+\end{figure}
+
+Notice how the eigenvalues become more concentrated around $\pm0.7$ as $N \rightarrow \infty$.  Our goal is to find some function that describes the distribution of these eigenvalues, and can explain why they become so densely populated at certain points. With this is in mind, we begin by utilitzing the Szeg\"{o}-Limit Theorem. 
+
+\begin{theorem} \emph{(Szeg\"{o}-Limit Theorem)} \label{Szego} If f is not horrible, then $\forall k \ge 1, k \in \mathbb{Z}$: \begin{equation}
+\lim_{N \to \infty} \frac{1}{N+1} Tr((T_{f,N})^k) = \frac{1}{2\pi} \int^{\pi}_{-\pi} \! \int^1_0  f_{f,N}(x,p)^k \,dp \,dx \label{szego}
+\end{equation} 
+\end{theorem}
+
+ Because $T_{f,N}$ is Hermitian, it can be diagonlized.  Using this property, along with the fact that $Tr(AB) = Tr(BA)$, it is not difficult to rewrite Equation \ref{szego} as 
+
+\begin{equation} 
+\lim_{N \to \infty} \frac{1}{N+1} \displaystyle\sum\limits_{j=0}^{N} (\lambda_{j}^{(N)})^k= \frac{1}{2\pi} \int^{\pi}_{-\pi} \! \int^1_0  f_{f,N}(x,p)^k \,dp \,dx 
+\end{equation} Further, it can be shown that this slightly altered form of the Szeg\"{o}-Limit Theorem is in fact just one instance of a more powerful equality.  In general:
+
+\begin{corollary}
+If $\varphi \ cont:[-1,1] \rightarrow \mathbb{R}$, then
+\begin{equation}
+\lim_{N \to \infty} \frac{1}{N+1}  \displaystyle\sum\limits_{j=0}^N \varphi(\lambda_{j}^{(N)})= \frac{1}{2\pi} \int^{\pi}_{-\pi} \! \int^1_0  \varphi(f_{f,N}(x,p)) \,dp \,dx \label{BIGGUY}
+\end{equation}
+\end{corollary}
+
+Consider the left side of this equation to be in the form of a Riemman sum. If the $\lambda_{j}^{(N)}$ were evenly distributed, we would be able to rewrite this equation as 
+
+\begin{equation} 
+\int^1_{-1} \varphi(t) \,dt 
+\end{equation} Yet, from Figure 1 we can tell that this is not the case; consequently, we must compensate for this unequal distribution with some correction function, $\beta(t)$ s.t. 
+
+\begin{equation}
+\lim_{N \to \infty} \frac{1}{N+1}  \displaystyle\sum\limits_{j=0}^N \varphi(\lambda_{j}^{(N)}) = \int^1_{-1} \varphi(t) \beta (t) \,dt \label{HOW}
+\end{equation} This function, $\beta(t)$, is exactly the function that will describe the distribution of our eigenvalues. WHY? NEED EXPLANATION.  Combining Equations \ref{BIGGUY} and \ref{HOW} we get 
+
+\begin{equation} 
+\int^{\pi}_{-\pi} \! \int^1_0  \varphi(f_{f,N}(x,p)) \,dp \,dx = \int^1_{-1} \varphi(t) \beta (t) \,dt \label{beta} 
+\end{equation}
+
+To solve for $\beta(x)$  using exact methods, we can consider using the Coarea formula.
+
+\begin{theorem}
+\emph{(Coarea formula)} \label{coarea}
+Suppose that $\Omega$ is an open set in $\mathbb{R}^{n}$, and f is a real-valued Lipshitz function on $\Omega$.  Then, for an $L^{1}$ function $\Psi$,
+\begin{equation}
+\iint\limits_\Omega \Psi(x)\lvert\nabla f(x)\rvert \,dx =  \int_{Im(f)} \! (\int_{f^{-1}(x)} \Psi \,ds) \,dx
+\end{equation}
+\end{theorem}
+
+For our purposes, we can let 
+
+\begin{equation} 
+\Psi = \frac{\varphi(f(x,p))}{\lvert\nabla f(x,p)\rvert} 
+\end{equation} and 
+
+\begin{equation} 
+\Omega = [-\pi,\pi] \times [0,1] 
+\end{equation} We can then rewrite the left side of Equation \ref{beta} as 
+\begin{equation} \begin{split} 
+\int^{\pi}_{-\pi} \! \int^1_0  \varphi(f_{f,N}(x,p)) \,dp \,dx& =  \iint\limits_\Omega \Psi\lvert\nabla f \rvert\, dp \, dx  \\ 
+& = \int_{Im(f)} \! \left(\int_{f^{-1}(t)} \frac{\varphi(f(x,p))}{\lvert\nabla f(x,p)\rvert} \,ds\right) \,dt    \text{ $...$ by the Coarea fomula} \\
+& = \int_{Im(f)} \! \left(\int_{f^{-1}(t)} \frac{\varphi(t)}{\lvert\nabla f(x,p)\rvert} \,ds\right) \,dt\\ & = \int_{Im(f)} \varphi(t) \! \left(\int_{f^{-1}(t)} \frac{1}{\lvert\nabla f(x,p)\rvert} \,ds\right) \,dt \end{split} 
+\end{equation} Notice that the inner integral is exactly the $\beta(x)$ that we originally set out to find:
+
+\begin{equation}
+\beta(x) = \int_{f^{-1}(t)} \frac{1}{\lvert\nabla f(x,p)\rvert} \,ds
+\end{equation}
+
+With that said, we know of no reasonable method to analytically compute such an integral. Thus instead we focus our attention on approximating this unknown distribution function.  Our method of choice is orthogonal polynomials, specifically the normalized $Legendre$ polynomial. It is important to note that  these polynomials are only orthogonal on the interval $[-1,1]$, and thus that is the only interval on which our approximation will  make sense.
+
+Let 
+\begin{equation} 
+\beta (x) = \displaystyle\sum\limits_{n=0}^N a_n P_n(x) 
+\end{equation} where 
+
+\begin{equation} 
+a_n = \int^1_{-1} \beta (x) P_n(x) \, dx,\  P_n = \lvert\lvert{p_n}\rvert\rvert 
+\end{equation} and the unnormalized Legendre polynomials, $p_n$, are 
+
+\begin{equation} 
+1, x, \frac{1}{2}(3x^2 - 1), \frac{1}{2}(5x^3 -3x), \frac{1}{8}(35x^4 - 30x^2 + 3), \cdots 
+\end{equation} Using the equality from Equation \ref{beta}, we can rewrite $a_n$ as 
+
+\begin{equation} 
+a_n = \int^{\pi}_{-\pi} \! \int^1_0  P_n(f_{f,N}(x,p)) \,dp \,dx
+\end{equation} Using this approximation, we find the graph of $\beta (x)$ from our initial example to be 
+
+\begin{figure} [H] 
+\centerline{\includegraphics[scale=.50]{legendre_apprx2}} 
+\caption{Distribution approximation function} 
+\end{figure} Notice the two peaks around $\pm0.7$.  This is consistent with our data from Figure 1, in which the eigenvalues are most densely distributed at those two numbers.
+
+Another interesting case to consider is where the Szeg\"{o}-Toeplitz matrix formed has non-zero values everywhere, as opposed to the previous example where only two diagonals contained such values.  Let $$f(x,p) = xp, [-\pi,\pi]\times[0,1]$$ \begin{figure} [H] \centerline{\includegraphics[scale=.60]{eigenvalues_xp}} \caption{eigenvalues for given N} \end{figure} \clearpage \begin{figure} [H] \centerline{\includegraphics[scale=.50]{legendre_apprx_xp}} \caption{Distribution approximation function} \end{figure}  Once again we find that the peak of our distribution approximation function corresponds exactly to the area of highest concentration among eigenvalues in the spectrum.
+
+We have just provided
+
+\section{Berezin-Toeplitz Quantization}
+
+While very interesting, the Weyl quantization method applies only to real-valued functions, and the true focus of this research is understanding the distributions of much more interesting functions. We are consequently motivated to define a different quantization method, the Berezin-Toeplitz Quantization, which will allow us to explore more interesting cases. To do so, we begin by considering the domain $(x,p)\in [0,2\pi]\times\mathbb{R}$, and imposing a complex variable z s.t. $z = x-ip \in \mathbb{C}$. We can then form a geometric quantization to the Bergmann Space, $\mathcal{B}$, of the cylinder where $\mathcal{B} = \Psi(z)$, defined s.t.
+\begin{enumerate}
+\item $\Psi$ is analytic, i.e. $\Psi$ is not a function of $\overline{z}$
+\item $\Psi$ is periodic in $z$, i.e. $\Psi(z + 2\pi) = \Psi(z)$
+\item $\lvert\lvert\Psi\rvert\rvert^2 =  \int^{2\pi}_{0} \! \int^{\infty}_{-\infty}  \lvert\Psi(z)\rvert^{2}e^{-Np^{2}} \,dp \,dx< \infty, N=\frac{1}{\hbar}$
+\end{enumerate}
+
+We define the Hermitian inner product on $\mathcal{B}$ s.t.
+
+$$ \forall \Psi_{1},\Psi_{2} \in \mathcal{B}, \langle\Psi_{1},\Psi_{2}\rangle = \int^{2\pi}_{0} \! \int^{\infty}_{-\infty}  \Psi_{1}(z)\overline{\Psi_{2}(z)}e^{-Np^{2}} \,dp \,dx$$
+
+Our goal is now to find an orthonormal basis of $\mathcal{B}$, which we can use to define the Berezin-Toeplitz operator. \begin{proposition} $\forall n \in\mathbb{Z}, e^{inz}\in\mathcal{B}$ \end{proposition} We see how this is true because this generalized vector fulfills the three conditions we just set out for $\mathcal{B}$ :
+
+\begin{enumerate}
+\item 
+$e^{inz} = \displaystyle\sum\limits_{k=0}^\infty \frac{1}{k!}(inz)^k$ by Taylor's theorem.  There are clearly no $\overline{z}$.
+
+\item
+\begin{equation*}
+\begin{split}
+e^{in(z+2\pi)} &= e^{inz} e^{in2\pi} \\
+& = e^{inz}\cdot 1 \\
+& = e^{inz}
+\end{split}
+\end{equation*}
+
+\item 
+It can be shown through fairly straightforward calculation that 
+\begin{equation}
+\lvert\lvert e^{inz}\rvert\rvert^2 = \frac{2\pi^{3/2}}{N^{\frac{1}{4}}}e^{\frac{\pi^2}{2N}} < \infty \label{normalizer}
+\end{equation}
+\end{enumerate} Since we are looking for an orthonormal basis, we divide by the length of $e^{inz}$ found in Equation \ref{normalizer}.
+
+\begin{mydef}
+$\forall n \in \mathbb{Z}, e_{n}(z) := \frac{e^{inz}}{\sqrt{T}}, T = \frac{2\pi^{3/2}}{N^{\frac{1}{4}}}e^{\frac{\pi^2}{2N}}$
+\end{mydef} From our definition of $e_n(z)$, it follows shortly thereafter that  $\langle e^{inz},e^{imz}\rangle = \delta_{nm}$, and consequently we can claim that $\{e_n | n\in \mathbb{Z}\}$ is an orthonormal basis of $\mathcal{B}$.  
+
+Let $\mathcal{H} = span\{e_n |\, 0\le n \le N\}$.  Then take $f: [0,2\pi]\times\mathbb{R} \rightarrow\mathbb{R}$, and we are now able to define the Berezin-Toeplitz Operator of $f$
+
+\begin{mydef}
+\emph{(Berezin-Toeplitz Operator)}
+$Op(f):\Psi \rightarrow f\Psi\rightarrow\Pi(f\Psi)$, where $\Pi$ is the othogonal projection of $\Psi$  onto $\mathcal{B}$
+\end{mydef}
+
+In other words, the operator takes an element of $\mathcal{B}$ and hits it with $f$, but because $f\Psi\notin\mathcal{B}$ (consider $f(x,p) = cosx + psinx$), we must then project back onto the Bergmann space, hence the orthogonal projection.
+
+We can rewrite
+
+\begin{equation}
+\Pi(f\Psi) = \displaystyle\sum\limits_{n=0}^N\langle f\Psi,e_n\rangle e_n
+\end{equation}
+
+We now want to find the matrix of $Op(f)$ $w.r.t$ $\{e_n| n=0,1,2,\cdots,N\}$
+
+\begin{equation}
+\begin{split}
+t_{m,n} &= \langle Op(f)(e_n),e_m\rangle \\
+& =\langle fe_n,e_m\rangle \text{$\cdots$ because $\Pi$ is adjoint} \\
+& = \frac{\sqrt{N}}{2\pi^{\frac{3}{2}}}e^{-\frac{n^2+m^2}{2N}}  \int^{2\pi}_{0} \! \int^{\infty}_{-\infty}f(x,p)e^{in(x-ip)}\overline{e^{im(x-ip)}}e^{-Np^{2}} \,dp \,dx \\
+& =  \frac{\sqrt{N}}{2\pi^{\frac{3}{2}}}e^{-\frac{n^2+m^2}{2N}}  \int^{2\pi}_{0} \! \int^{\infty}_{-\infty}f(x,p)e^{i(n-m)x}e^{(n+m)p-Np^{2}} \,dp \,dx
+\end{split}
+\end{equation}
+
+Recall that $\mathcal{H} = span\{e_n, 0\le n \le N\}$.  If we rewrite the range of $n$ as $0\le \frac{n}{N} \le 1$, then $\mathcal{H}$ can be thought of as the span\{eigenvectors of Op(p) with eigenvalues in $[0,1]$\}.  Hence we can rewrite the quantization as 
+
+\begin{equation}
+\frac{\sqrt{N}}{2\pi^{\frac{3}{2}}}e^{-\frac{n^2+m^2}{2N}}  \int^{2\pi}_{0} \! \int^{1}_{0}f(x,p)e^{i(n-m)x}e^{(n+m)p-Np^{2}} \,dp \,dx
+\end{equation} using the corresponding classical region as was used with the Weyl Quantization.  This final result is the Berezin-Toeplitz quantization we originally set out to find.  Notice that to this point we have made no assumptions about $f$ being real valued.  
+
+\section{Dirac Delta Function}
+
+For simplicity, let
+$$A_{m,n}^N = \frac{\sqrt{N}}{2\pi^{\frac{3}{2}}}e^{-\frac{n^2+m^2}{2N}}$$ Using the Berezin-Toeplitz Quanitzation, we are now able to to consider the spectrum of more interesting functions.  The most elementary such function we can consider is the Dirac Delta Function.  For this generalized function, we find its matrix to be 
+
+\begin{equation} 
+\begin{split} 
+t_{m,n} &=  A_{m,n}^N\int^{2\pi}_{0} \! \int^{1}_{0}\delta(x_{0},p_{0})e^{i(n-m)x}e^{(n+m)p-Np^{2}} \,dp \,dx \\ 
+&=A_{m,n}^Ne^{i(n-m)x_{0}}e^{(n+m)p_{0}-Np_{0}^{2}} 
+\end{split} 
+\end{equation} For $x_{0} = 1, p_{0} = 1/3$, we get 
+
+\begin{figure} [H]\centerline{\includegraphics[scale=.62]{eigenvalues_delta}} \caption{Spectrum of the Dirac Delta Function} \end{figure} From the graph we conclude that the delta function is a linear projector (?) times a linearly increasing constant in the context of the B-T quantization.
+
+Motivated by finding a more interesting case, we now study the more slightly more complicated Dirac Delta Function associated with a Curve.
+ 
+\begin{mydef} The Dirac Delta Function associated with a Curve, $\delta_{\gamma}$, is the generalized function s.t. $\forall\ \varphi: [0,2\pi] \times \mathbb{R} \rightarrow \mathbb{R}$ "nice", $$  \int^{2\pi}_{0} \! \int^{1}_{0}\delta_{\gamma}(x,p)\varphi(x,p) \,dp \,dx \\ = \int_{\gamma} \varphi \,ds$$ 
+\end{mydef} The simplest curve to consider for our domain is the ellipse 
+
+\begin{equation} 
+\left(\frac{x}{2\pi}\right)^2 + p^2  = 1, \nonumber 
+\end{equation} where $0\le x\le\frac{\pi}{2}, 0\le p \le 1$. Using the Berezin-Toeplitz Quantization, we get 
+
+\begin{equation}
+\begin{split}
+t_{m,n} &= A_{m,n}^N\int^{2\pi}_{0} \! \int^{1}_{0}\delta_{\gamma}(x,p)e^{i(n-m)x}e^{(n+m)p-Np^{2}} \,dp \,dx \\ \nonumber
+&= A_{m,n}^N\int_{\gamma} e^{i(n-m)x}e^{(n+m)p-Np^{2}} \,ds
+\end{split}
+\end{equation} Using the parametrization $x = 2\pi\cos(t), p = \sin(t), ds = \sqrt{\frac{dx}{dt}^2 + \frac{dp}{dt}^2}dt, 0\le t \le \frac{\pi}{2}$, we get
+\begin{equation}
+t_{m,n} = A_{m,n}^N\int_{0}^{\frac{\pi}{2}} e^{i(n-m)2\pi\cos(t)}e^{(n+m)\sin(t)-N\sin^{2}(t)}\sqrt{(-2\pi\sin(t))^2 + cos^2(t)} \,dt
+\end{equation}
+
+Using MATLAB to graph the eigenvalues of these matrices for varying N, it is necessary to use numerical integration, specifically adapative Simpson quadrature in this instance, to get compile times under 8 hours.  When computing the matrix for $N\approx 68$, a singularity occurs in the quadrature process, causing an invalid approximation to occur, which can be seen in the following normalized graph: 
+\begin{figure} [H]
+\centerline{\includegraphics[scale=.77]{eigenvalues_D_ellipse_75_norm}}
+\caption{Spectrum of the Dirac Delta Function assoc. Ellipse}
+\end{figure}
+
+ Our overarching goal is still to find a function that explain this distribution, and in doing so generalize the Szeg\"{o} limit theorem.  The case of the ellipse, however, presents is complicated enough that it makes sense to simply even further.  With this in mind we consider a much more basic example from which we hope to further.
+
+Let $\begin{cases} x =t, 0\le t\le 2\pi \\ p = p, p \in \mathbb{R} \end{cases}$ .  Using the Berezin-Toeplitz Quantization, we get
+
+\begin{equation}
+\begin{split}
+t_{m,n} &= A_{m,n}^N\int^{2\pi}_{0} \! \int^{1}_{0}\delta_{\gamma}(x,p)e^{i(n-m)x}e^{(n+m)p-Np^{2}} \,dp \,dx \\ \nonumber
+&= A_{m,n}^Ne^{(n+m)p-Np^{2}}\int_0^{2\pi}e^{i(n-m)t} \,dt \\
+&= 2\pi A_{m,n}^N\delta_{mn}e^{(n+m)p-Np^{2}}
+\end{split}
+\end{equation} where $\delta_{mn}$ is the Kroenecker Delta.  This eventually simplifies to  \begin{equation}
+\begin{split}
+t_{m,n}&=\delta_{mn}\sqrt{\frac{N}{\pi}}e^{-(\sqrt{N}p-\frac{n}{\sqrt{N}})^2}
+\end{split}
+\end{equation} Since we are dealing with a diagonal $n\times n$ matrix, we have the property that the $n^{th}$ eigenvalue is equivalent to the value in the $n^{th}$ row and $n^{th}$ column of the matrix.  After normalizing, we are left with
+\begin{equation}
+\lambda_n^{(N)} = e^{-(\sqrt{N}p-\frac{n}{\sqrt{N}})^2} \label{SEXY}
+\end{equation} and the following graph: \begin{figure} [H]
+\centerline{\includegraphics[scale=.75]{eigenvalues_D_x=t_p=p_normalized}}
+\caption{Asymptotic expansion}
+\end{figure}
+
+
+
+We now direct our attention to the Szeg\"{o} Limit Theorem.  Let $\mathcal{W} \in C^{o}(\mathbb{R})$, where $C^{o}(\mathbb{R})$ is the space of continuous functions on $\mathbb{R}$.  We are interested in replicating the relationship derivied in Equation $\ref{BIGGUY}$, the Generalized Szeg\"{o} Corollary. Specifically, consider 
+
+\begin{equation}
+ \lim_{N\to\infty}\frac{1}{N}\displaystyle\sum\limits_{k=1}^{N}\mathcal{W}(\lambda_{k}^{(N)}) 
+\end{equation}  We substitute $\lambda_k^{(N)}$ with Equation \ref{SEXY} to get
+ 
+\begin{equation} 
+\lim_{N\to\infty}\frac{1}{N}\displaystyle\sum\limits_{k=1}^{N}\mathcal{W}(e^{-(\sqrt{N}p-\frac{k}{\sqrt{N}})^2}) \label{SEXIER}
+\end{equation} If we let 
+
+\begin{equation} 
+f_N(u) = e^{-(\sqrt{N}p-u)^2} 
+\end{equation} and split $\frac{1}{N}$ into two equal parts then Equation \ref{SEXIER} becomes 
+
+\begin{equation} 
+\frac{1}{\sqrt{N}}\lim_{N\to\infty}\displaystyle\sum\limits_{k=1}^{N}\mathcal{W} \circ f_{N}\left(\frac{k}{\sqrt{N}}\right)\frac{1}{\sqrt{N}}
+\end{equation}  If we view this as a Riemann Sum, then we can rewrite it as 
+
+\begin{equation} 
+\frac{1}{\sqrt{N}}\int_0^{\sqrt{N}}\mathcal{W}(e^{-(\sqrt{N}p-u)^2})\,du 
+\end{equation}  Applying the change of variable $t = \frac{u-\sqrt{N}p}{\sqrt{N}}$, we are left with 
+
+\begin{equation} 
+\int_{-p}^{1-p}\mathcal{W}(e^{-Nt^2})\,dt 
+\end{equation} As $N\to\infty$, this expression goes to 0, which gives us little information about our desired distribution function. Fortunately, however, using asymptotic analysis we can approximate this integral to get a better idea of what is occuring.
+
+To start off with the simplest case, let $$\mathcal{W}(x) = x^k$$.  We then have $$\int_{-p}^{1-p}e^{-kNt^2}\,dt$$ which can be split up into $$\int_0^{p}e^{-kNt^2}\,dt + \int_0^{1-p}e^{-kNt^2}\,dt$$ and the bounds on the first integral are correct because $e^{-kNt^2}$ is an even function.  Applying the change of variable $s = \sqrt{kN}t$ we get 
+
+\begin{equation} 
+\begin{split} 
+& \frac{1}{\sqrt{kN}}\left(\int_0^{\sqrt{kN}p}e^{-s^2}\,ds + \int_0^{\sqrt{kN}(1-p)}e^{-s^2}\,ds\right) \\ &= \frac{1}{2}\sqrt{\frac{\pi}{kN}}\left(erf\left(\sqrt{kN}p + erf\left(\sqrt{kN}(1-p)\right)\right)\right)
+ \end{split}
+ \end{equation}  Using asympstotic expansion, this approximately equals 
+
+\begin{equation} 
+\label{NO}
+\frac{1}{2}\sqrt{\frac{\pi}{kN}}\left[ 2 + e^{-kNp^2}(a_n) + e^{-kn(1-p)^2}(b_n) \right] 
+\end{equation} where
+
+\begin{equation}
+a_n = \displaystyle\sum\limits_{n=0}^{\infty} (-1)^{n+1}\frac{(2n-1)!!}{2^n (\sqrt{kN}p)^{2n+1}}
+\end{equation}
+
+\begin{equation}
+b_n = \displaystyle\sum\limits_{n=0}^{\infty} (-1)^{n+1} \frac{(2n-1)!!}{2^n(\sqrt{kN}(1-p))^{2n+1}}
+\end{equation}
+
+
+Simultaneously we consider the same integral from before: $$\int_{-p}^{1-p}\mathcal{W}(e^{-Nt^2})\,dt$$ but with a different change of variables, this time $$s = e^{-Nt^2}$$  We get 
+
+\begin{equation}
+\label{ohyeah}
+\frac{1}{2\sqrt{N}}\left[\int_{e^{-Np^2}}^{1} \frac{\mathcal{W}(s)}{s\sqrt{-\log s}}\,ds + \int_{e^{-N(1-p)^2}}^{1} \frac{\mathcal{W}(s)}{s\sqrt{-\log s}}\,ds\right]
+\end{equation}  If we let $\mathcal{W}(s) = s^k$ once again, then this simplifies to 
+
+\begin{equation}
+\frac{1}{2\sqrt{N}}\left[\int_{e^{-Np^2}}^{1} \frac{s^{k-1}}{\sqrt{-\log s}}\,ds + \int_{e^{-N(1-p)^2}}^{1} \frac{s^{k-1}}{\sqrt{-\log s}}\,ds\right]
+\end{equation}  Using the fact that
+
+\begin{equation}
+\int_{0}^{1} \frac{s^{k-1}}{\sqrt{-\log s}}\,ds = \sqrt{\frac{\pi}{k}}
+\end{equation} we can simplify equation \ref{ohyeah} to
+
+\begin{equation}
+\frac{1}{2\sqrt{N}}\left(2\sqrt{\frac{\pi}{k}}\right) = \sqrt{\frac{\pi}{kN}}
+\end{equation}
+
+Notice that $\sqrt{\frac{\pi}{kN}}$ is the same leading term from our asymptotic expansion from Equation \ref{NO}.  We use this as motivation for our theorem and its proof.
+
+\begin{proof}
+Lemons
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
