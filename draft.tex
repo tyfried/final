@@ -2,10 +2,18 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+
 %\usepackage{graphicx}
 %\usepackage{caption}
 %\usepackage{epstopdf}
 %\usepackage{float}
+
+
+\newtheorem{theorem}{Theorem}
+\numberwithin{theorem}{subsection}
+
+
+
 
 \title{Exploring Bounds}
 \author{Tyler Friedman}
@@ -29,6 +37,59 @@ paper is to consider other well-known bounds in the literature.
 
 This paper is broken up into $x$ sections.
 
+
+\section{Asymptotic Bounds}
+We now wish to consider these $A_q(n,d)$ values as n goes to infinity.  To do so, we must more formally define two terms.
+
+In class, we have considered the \textit{rate} of a linear code, $k/n$, as one measure of the goodness of a code.  That is,
+the rate tells us how much information relative to redundancy that our codewords provide.  The concept of rate can be generalized
+to non-linear codes as well.  For a possibly nonlinear code over $\mathbb{F}_q$ with $M$ codewords, the \textit{rate} is defined to be $n^{-1} \log_q {M}$.  Notice that
+for an $[n,k,d]$ linear code, $M = q^k$ and hence the rate is $k/n$ as we expect.
+
+A second notion of goodness that we have discussed, but I think not formally defined, is the \textit{relative distance} of a code.  For a linear or nonlinear code of length n
+has minimum distance d, this value is the ratio $d/n$. 
+
+Consequently, for our asymptotic bounds, we are interested in the largest possible rate for a family of codes over $\mathbb{F}_q$ of lengths going to infinity with relative 
+distances approaching some constant $\delta$.  In other words, we consider the equation:
+
+\begin{equation}
+\alpha_{q}(\delta) = \limsup_{n \to \infty} n^{-1} \log_q A_q(n,\delta n)
+\end{equation}
+
+
+[What does this imply?]
+
+\subsection{Asymptotic Singleton Bound}
+
+Recall the Singleton Bound from lecture:
+
+\begin{theorem}
+For $d \le n$, $A_q(n,d) \le q^{n-d+1}$.
+\end{theorem}
+
+[explain what this means, what are the implications]
+
+
+\begin{theorem}
+If $0 \le \delta \le 1$, then $\alpha_q(\delta) \le 1 - \delta$.
+\end{theorem} 
+This theorem follows directly from the Singleton bound.
+
+\begin{proof}
+\begin{equation} 
+\begin{split}
+\alpha_{q}(\delta) & = \limsup_{n \to \infty} n^{-1} \log_q A_q(n,\delta n) \\
+& \le \limsup_{n \to \infty} n^{-1} \log_q q^{n-\delta n+1} \\
+& \le \limsup_{n \to \infty} \frac{n-\delta n+1}{n} \\
+& \le 1 - \delta
+\end{split}
+\end{equation}
+\end{proof}
+
+\subsection{Asymptotic Plotkin Bound}
+
+
+
 %First explore linear programming bound
 Asymptotic singleton, include 2 examples
 Asymptotic plotkin, some examples
@@ -42,7 +103,7 @@ Table of common$a_q(n,d)$ values
 Recall basic theory: thm 2.1.2, 2.1.6
 
 Sections
-
+ 
 Plotkin
 talk about importance
 define it
