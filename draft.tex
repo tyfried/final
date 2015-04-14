@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{verbatim}
 
 %\usepackage{graphicx}
 %\usepackage{caption}
@@ -24,19 +25,28 @@
 
 \section{Introduction}
 
-An interesting problem in coding theory is how to determine the maximum possible
-number of codewords in a code.  For an $n$-dimensional code, we are interested in 
-the maximum number of codewords such that the code has weight $d$.  
+An interesting problem in coding theory is determining the maximum
+number of codewords in a code with certain parameters.  For an $n$-dimensional code, we are interested in 
+the maximum number of codewords such that the code has minimum distance $d$.  
 Formally, we use the notation $A_q(n,d)$
-and $B_q(n,d)$, defined as the maximum of number of codewords in a code over
+and $B_q(n,d)$ to define the maximum of number of codewords in a code over
 $\mathbb{F}_q$ of length $n$ and minimum distance $d$ for an arbitrary (linear
-on non-linear) code and linear code, respectively.  It is not always possible to In lecture, we have
-considered upper bounds---Sphere Packing, Singleton, and Greismer---as well as
+on non-linear) code and linear code, respectively.  
+
+For arbitrary $n$ and $d$, it is difficult to find $A_q(n,d)$ and $B_q(n,d)$ exactly.
+ In lecture, we have considered upper bounds---Sphere Packing, Singleton, and Greismer---as well as
 lower bounds---Gilbert and Varshamov---on these values.  The purpose of this
-paper is to consider other well-known bounds in the literature.
+paper is to take a survey of other well-known bounds in the literature that we have not discussed.  
+In the first part of the paper, we will consider the Plotkin Upper bound, 
+the Elias Upper bound, and the Linear Programming Upper Bound.  In the second part of the paper, we will consider asymptotic versions
+of Singleton, Plotkin, Hamming, and Elias.  (I am very certain that I won't get to discuss all of these bounds, but I am currently unsure how much space each discussion will take up so I've
+listed all that I am considering.)  For each bound, we will consider its proof as well
+as related examples.  Lastly, in the final part we will consider lexicodes, an interesting subset of linear codes that meet the Gilbert Bound.
 
-This paper is broken up into $x$ sections.
+Some implementation specific details: for the Linear Programming bound, I will introduce basic linear programming concepts and as well as the Krawtchouck polynomials.  For the 
+Asymptotic Hamming bound I will introduce the Hilbert entropy function.  
 
+\begin{comment}
 
 \section{Asymptotic Bounds}
 We now wish to consider these $A_q(n,d)$ values as n goes to infinity.  To do so, we must more formally define two terms.
@@ -128,7 +138,7 @@ Note existence of two lower bounds, say we talked about them in class
 
 
 
-
+\end{comment}
 
 
 
