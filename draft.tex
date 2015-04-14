@@ -46,7 +46,73 @@ as related examples.  Lastly, in the final part we will consider lexicodes, an i
 Some implementation specific details: for the Linear Programming bound, I will introduce basic linear programming concepts and as well as the Krawtchouck polynomials.  For the 
 Asymptotic Hamming bound I will introduce the Hilbert entropy function.  
 
-\begin{comment}
+
+\section{Upper Bounds}
+
+\subsection{Plotkin Upper Bound}
+%Plotkin
+%talk about importance
+%define it
+%prove it
+%work out some examples
+
+The Plotkin Bound is an upper bound that often improves upon the Sphere Packing Bound on $A_q(n,d)$.  It is limited, however, in that it is only valid when $d$ is sufficiently
+close to $n$.  Consider that for $q=2$ our restriction is $n<2d$,  for $q=3$ our restriction is $n<\frac{3}{2}d$, for $q=4$ our restriction is $n<\frac{4}{3}d$, etc.  For large $q$, the
+number of codes we can consider becomes increasingly limited.
+
+\begin{theorem}[Plotkin]
+Let $C$ be an $(n,M,d)$ code over $\mathbb{F}_q$ such that $rn < d$ where $r = 1 - q^{-1}$.  Then
+\begin{equation}
+A_q(n,d) \le \left \lfloor \frac{d}{d-rn}\right\rfloor
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let 
+\begin{equation} \label{plotkin_1}
+S = \sum_{x \in \mathcal{C}} \sum_{y \in \mathcal{C}} \text{d}(x,y)
+\end{equation}
+
+Note that for $x,y \in \mathcal{C}$, d$(x,y)=0$ for $x=y$, and $d \le$ d$(x,y)$ for $x\neq y$.  This implies that
+\begin{equation}
+M(M-1)d\le S
+\end{equation}
+
+This comes directly from equation \ref{plotkin_1}.  We have $M$ possible codewords to consider for $x$ in the outer summation, $M-1$ distinct codewords from $x$ to consider in the inner summation for $y$, and the distance between $x$ and $y$ will always be greater than or equal to $d$.
+
+Next, let $\mathcal{M}$ be the $M \times n$ matrix whose rows are the codewords of $\mathcal{C}$.  For $1 \le i \le n$, let $n_{i,\alpha}$ be the number of times $\alpha \in
+ \mathbb{F}_q$ occurs in column $i$ of $\mathcal{M}$.  Note that $\sum_{\alpha \in \mathbb{F}_q} n_{i,\alpha} = M$ for $1\le i \le n$.  This is simply because there are $M$ total
+ elements of $\mathbb{F}_q$ in each column, so the sum over all $n_{i,\alpha}$ must necessarily be $M$.  Consequently, we have
+
+\begin{equation}
+\begin{split}
+S = \sum_{i=1}^{n} \sum_{\alpha\in\mathbb{F}_q} n_{i,\alpha}(M - n_{i,\alpha}) &= M\sum_{i=1}^{n} \sum_{\alpha\in\mathbb{F}_q} n_{i,\alpha} - \sum_{i=1}^{n} \sum_{\alpha\in\mathbb{F}_q} n_{i,\alpha}^2 \\
+&= nM^2 - \sum_{i=1}^{n} \sum_{\alpha\in\mathbb{F}_q} n_{i,\alpha}^2
+\end{split}
+\end{equation}
+
+Recall the Cauchy-Schwarz inequality, which states that 
+\begin{equation}
+\left(\sum_{i=1}^n x_i y_i \right )^2 \le \left(\sum_{i=1}^n x_i^2 \right ) \left(\sum_{i=1}^n y_i^2 \right )
+\end{equation}
+
+For our purposes, this means that 
+\begin{equation}
+\left(\sum_{\alpha\in\mathbb{F}_q} 1\cdot n_{i,\alpha} \right )^2 \le q \left(\sum_{\alpha\in\mathbb{F}_q} n_{i,\alpha}^2 \right )
+\end{equation}
+
+Using this inequality, we obtain
+
+\begin{equation}
+S \le nM^2 - \sum_{i=1}^n q^{-1} \left(\sum_{\alpha\in\mathbb{F}_q} 1\cdot n_{i,\alpha} \right )^2 = nM^2 - \frac{nM^2}{q} = nrM^2
+\end{equation}
+
+Combining the two, we get FINISH.
+
+
+\end{proof}
+
+
 
 \section{Asymptotic Bounds}
 We now wish to consider these $A_q(n,d)$ values as n goes to infinity.  To do so, we must more formally define two terms.
@@ -113,12 +179,7 @@ Table of common$a_q(n,d)$ values
 Recall basic theory: thm 2.1.2, 2.1.6
 
 Sections
- 
-Plotkin
-talk about importance
-define it
-prove it
-work out some examples
+
 
 Elias
 talk about importance
@@ -135,11 +196,6 @@ work out some examples
 
 
 Note existence of two lower bounds, say we talked about them in class
-
-
-
-\end{comment}
-
 
 
 \end{document}
