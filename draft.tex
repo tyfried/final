@@ -3,8 +3,10 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subfig}
 
-%\usepackage{graphicx}
 %\usepackage{caption}
 %\usepackage{epstopdf}
 %\usepackage{float}
@@ -71,7 +73,7 @@ A_q(n,d) \le \left \lfloor \frac{d}{d-rn}\right\rfloor
 \end{theorem}
 
 Before proving this bound, it is important to note that it is only valid when $d$ is sufficiently close to $n$.  For large $q$, this is can be a considerable limiting factor.
-Consider that for $q=2$ our restriction is $n<2d$,  for $q=3$ our restriction is $n<\frac{3}{2}d$, for $q=4$ our restriction is $n<\frac{4}{3}d$, etc.
+Consider that our restriction is $n<2d$ for $q=2$, $n<\frac{3}{2}d$ for $q=3$, $n<\frac{4}{3}d$ for for $q=4$, etc.
 
 
 \begin{proof}
@@ -110,32 +112,19 @@ Next, simplify:
 \end{split}
 \end{equation}
 
-Recall the Cauchy-Schwarz inequality, which states that 
-\begin{equation}
-\left(\sum_{i=1}^n x_i y_i \right )^2 \le \left(\sum_{i=1}^n x_i^2 \right ) \left(\sum_{i=1}^n y_i^2 \right )
-\end{equation}
-
-For our purposes, this means that 
-\begin{equation}
-\left(\sum_{\alpha\in\mathbb{F}_q} 1\cdot n_{i,\alpha} \right )^2 \le q \left(\sum_{\alpha\in\mathbb{F}_q} n_{i,\alpha}^2 \right )
-\end{equation}
+Recall the Cauchy-Schwarz inequality, which states that $\left(\sum_{i=1}^n x_i y_i \right )^2 \le \left(\sum_{i=1}^n x_i^2 \right ) \left(\sum_{i=1}^n y_i^2 \right )$
+For our purposes, this means that $\left(\sum_{\alpha\in\mathbb{F}_q} 1\cdot n_{i,\alpha} \right )^2 \le q \left(\sum_{\alpha\in\mathbb{F}_q} n_{i,\alpha}^2 \right )$.
 
 Using this inequality, we obtain
 
 \begin{equation} \label{plotkin_2}
-S \le nM^2 - \sum_{i=1}^n q^{-1} \left(\sum_{\alpha\in\mathbb{F}_q} 1\cdot n_{i,\alpha} \right )^2 = nM^2 - \frac{nM^2}{q} = nrM^2
+S \le nM^2 - \sum_{i=1}^n q^{-1} \left(\sum_{\alpha\in\mathbb{F}_q} 1\cdot n_{i,\alpha} \right )^2 = nM^2 - \frac{nM^2}{q} = nrM^2.
 \end{equation}
 
-Combining \ref{plotkin_1_5} and \ref{plotkin_2}, we get
+Combining \ref{plotkin_1_5} and \ref{plotkin_2}, we get $M(M-1)d \le nrM^2$, which simplifies to 
 
 \begin{equation}
-M(M-1)d \le nrM^2
-\end{equation}
-
-which simplifies to 
-
-\begin{equation}
-M \le \left\lfloor \frac{d}{d-rn} \right\rfloor
+M \le \left\lfloor \frac{d}{d-rn} \right\rfloor.
 \end{equation}
 
 \end{proof}
@@ -147,19 +136,39 @@ Also, recall that if $d$ is even, $A_2(n,d) = A_2(n-1,d-1)$.
 $(n,d) = (7,4)$.
 
 Applying the Sphere Packing bound, we have $A_2(7,4) = A_2(6,3) \le \frac{2^6}{1 + 6}$, 
-giving us $A_2(7,4) \le 9$.
+giving us $A_2(7,4) \le \textbf{9}$.
 
-Applying the Plotkin bound, we have $A_2(7,4) \le \frac{4}{4-\frac{1}{2}\cdot7} = 8$.
+Applying the Plotkin bound, we have $A_2(7,4) \le \frac{4}{4-\frac{1}{2}\cdot7} = \textbf{8}$.
 
 \end{exmp}
 
 \begin{exmp}
 $(n,d) = (9,6)$.
 
-Applying Sphere Packing, we have  $A_2(9,6) = A_2(8,5) \le \frac{2^8}{1+8+28}$, giving us $A_2(n,d) \le 6$.
+Applying Sphere Packing, we have  $A_2(9,6) = A_2(8,5) \le \frac{2^8}{1+8+28}$, giving us $A_2(n,d) \le \textbf{6}$.
 
-Applying the Plotkin bound, we have $A_2(9,6) \le \frac{6}{6-\frac{1}{2}\cdot9} = 4$.
+Applying the Plotkin bound, we have $A_2(9,6) \le \frac{6}{6-\frac{1}{2}\cdot9} = \textbf{4}$.
 \end{exmp}
+
+It is also interesting to consider a more broader picture of what is going on here.  Below is a graph comparing rates of codes versus the Sphere Packing and Plotkin bounds
+that we can calculate for those values for different values of q.  
+
+\begin{figure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{plotkin_q2.png}
+  \caption{1a}
+  \label{fig:sfig1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{plotkin_q3.png}
+  \caption{1b}
+  \label{fig:sfig2}
+\end{subfigure}
+\caption{plots of....}
+\label{fig:fig}
+\end{figure}
 
 
 
