@@ -4,9 +4,9 @@
 \usepackage{amsthm}
 \usepackage{verbatim}
 \usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subfig}
-\usepackage{enumitem}
+%\usepackage{caption}
+%\usepackage{subfig}
+%\usepackage{enumitem}
 
 %\usepackage{caption}
 %\usepackage{epstopdf}
@@ -343,12 +343,12 @@ all 32 vectors of $\mathbb{F}_2^5$ in lexicographic order: $00000$,$00001$,$0001
 $\mathcal{L}_1 = \{00000,00011\}$, $\mathcal{L}_2 = \{00000, 00011,00101,\\ 00110\}$, $\mathcal{L}_3 = \{00000, 00011,00101,00110,01001,01010,01100,01111\}$, and
 $\mathcal{L}_4 = \mathcal{L}$. We can check to make sure that each $\mathbf{c}_j$ is a linear combination of the $\mathbf{c}_{2^i}$s. For this example, consider $\mathcal{L}_3$:  
 
-Notice that this is simply the even weight vectors.  In fact, it is true that for any $q$
-
+Notice that this is simply the even weight vectors.  In fact, it is true that
+for any $q$.
 THIS IS THE EVEN WEIGHT CODE! prove it.
 
 
-\begin{enumerate}[start=0]
+\begin{enumerate}%[start=0]
 \item $\mathbf{c}_0$ is the trivial linear combination.
 \item $\mathbf{c}_1 = \mathbf{c}_1$
 \item $\mathbf{c}_2 = \mathbf{c}_2$
@@ -387,11 +387,49 @@ $v \in \mathbb{F}_q^n$ must either be in $\mathcal{L}$ or must have distance $d-
 Consequently, it is enough to show that any code $\mathcal{C}$ with covering radius $d-1$ or less meets the Gilbert bound.  Recall that the Gilbert bound can be thought of as a restatement of the 
 following fact: (number of spheres) $\cdot$ (number of vectors in a sphere with radius $d-1$) $\ge$ (number of vectors in $\mathbb{F}_q^n$).  Since our covering radius
 is $d-1$ or less, and we have that all codewords are distance $d$ or more apart, consequently no sphere of radius $d-1$ in $\mathbb{F}_q^n$ can contain more than one codeword.
-As a result, 
+Our spheres will still overlap, however, meaning (number of vectors in
+$\mathbb{F}_q^n$)/(number of vectors in a sphere with radius $d-1$) will
+certainly be greater than or equal to the number of spheres around codewords.
 Hence, $\mathcal{C}$ meets the Gilbert bound.
 \end{proof} 
 
-Some notable codes we have discussed in class are in fact lexicodes. For example, the binary lexicodes with $d$=3 and $n=2^m-1$ are the binary hamming codes.  It can be quite
+Some notable codes we have discussed in class are in fact lexicodes.
+[REFERENCE]
+
+We can prove a basic property of binary Lexicodes.  First, though, we
+need an important definition.  
+
+\begin{defn}
+The $\mathbf{nim-sum}$ NS($v$) of a vector $v \in \mathbb{F}_2^n$ is the sum of
+it's coordinates in GF($2$).
+\end{defn}
+
+\begin{defn}
+A vector $v\in \mathbb{F}_2^n$ is $\mathbf{zero-sum}$ if NS($v$)=0.
+\end{defn}
+
+We have used the idea of nim-sums and zero-sums throughout the course, but instead we have
+referred to this notion in terms being even-like or odd-like.  This is the
+exact same notion, only in different terms.
+
+\begin{claim}
+For $d=q=2$, $\forall v\in \mathcal{L}$, NS($v$) $= 0$, and hence $\mathcal{L}$ is an even-like code.
+\end{claim}
+
+\begin{proof}
+We will prove this by inducting on $n$.  In the base case of $n=1$,
+$\mathcal{L}=\{0\}$, which is trivially zero-sum.  Assume that for the
+lexicode of length $n$, which we will denote $\mathcal{L}(n)$, all codewords are zero-sum.  Now, we must show that all
+the codewords in $\mathcal{L}(n+1)$ are zero-sum as well.  First, note that all
+codewords in $\mathcal{L}(n)$ are also in $\mathcal{L}(n+1)$, except with an
+extra leading zero.  By our assumption, these codewords are still zero-sum, as
+adding a zero in front will not change the nim-sum calculation.
+Now, we must show that any vector we can add to this set as proscribed by our
+algorithm must necessarily be a zero-sum vector as well.
+\end{proof}
+
+
+For example, the binary lexicodes with $d$=3 and $n=2^m-1$ are the binary hamming codes.  It can be quite
 tedious to compute and confirm something like this by hand, so I wrote a short C++ program that implements the Lexicode algorithm as described above.  
 
 \begin{exmp}
