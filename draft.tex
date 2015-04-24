@@ -409,7 +409,7 @@ A vector $v\in \mathbb{F}_2^n$ is $\mathbf{zero-sum}$ if NS($v$)=0.
 \end{defn}
 
 We have used the idea of nim-sums and zero-sums throughout the course, but instead we have
-referred to this notion in terms being even-like or odd-like.  This is the
+referred to this notion in terms of being even-like or odd-like.  This is the
 exact same notion, only in different terms.
 
 \begin{claim}
@@ -424,8 +424,21 @@ the codewords in $\mathcal{L}(n+1)$ are zero-sum as well.  First, note that all
 codewords in $\mathcal{L}(n)$ are also in $\mathcal{L}(n+1)$, except with an
 extra leading zero.  By our assumption, these codewords are still zero-sum, as
 adding a zero in front will not change the nim-sum calculation.
-Now, we must show that any vector we can add to this set as proscribed by our
-algorithm must necessarily be a zero-sum vector as well.
+Now, we must show that any vector we can add to this set as prescribed by our
+algorithm must necessarily be a zero-sum vector as well.  
+
+Since $\mathcal{L}(n)$ is contained in $\mathcal{L}(n+1)$, we begin our construction of $\mathcal{L}(n+1)$ with the elements of $\mathcal{L}(n)$.  Any new elements
+we will add must have a $1$ in the leading coordinate as we have maxed out our possibilities for $\mathcal{L}(n)$, and so lexicographically this makes sense as the new vectors we now need to consider will be `larger' than the ones
+we have already added in to $\mathcal{L}(n+1)$. 
+
+-If you approach an odd-weight vector that you can add, then there is even-weight vector that comes one before it that you should have added instead.
+
+
+-SHIT! if it is odd weight, then by definition that means that has a 1 in the leading column plus an even weight vector from $\mathcal{L}(n)$!!!!  That vector must necessarily be 
+distance 1 away from a vector in $\mathcal{L}(n)$, and thus cannot be added to $\mathcal{L}(n+1)$.  All even weight vectors will have a $1$ in the leading coordinate and then
+an odd number of $1$s in the next $n$ coordinates.  No odd numbers are in $\mathcal{L}(n)$, and so you will be at least distance one from all vectors already from $\mathcal{L}(n)$.
+So you get one component of your distance from the leading coordinate and at least one component of distance from you the last $n$ coordinates.  This completes the 
+proof!
 \end{proof}
 
 
