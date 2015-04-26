@@ -4,6 +4,10 @@
 \usepackage{amsthm}
 \usepackage{verbatim}
 \usepackage{graphicx}
+\usepackage{enumerate}
+%\usepackage{figure}
+
+
 %\usepackage{caption}
 %\usepackage{subfig}
 %\usepackage{enumitem}
@@ -13,24 +17,18 @@
 %\usepackage{float}
 
 
-\newtheorem{theorem}{Theorem}
-\numberwithin{theorem}{subsection}
-
-\newtheorem{lemma}{Lemma}
-\numberwithin{lemma}{subsection}
-
+\theoremstyle{plain}
+  \newtheorem{theorem}{Theorem}[section]
+  \newtheorem{prop}[theorem]{Proposition}
+  \newtheorem{cor}[theorem]{Corollary}
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{claim}[theorem]{Claim}
 \theoremstyle{definition}
-\newtheorem{exmp}{Example}
-\numberwithin{exmp}{subsection}
-
-\theoremstyle{definition}
-\newtheorem{defn}{Definition}
-\numberwithin{defn}{subsection}
-
-\theoremstyle{definition}
-\newtheorem{claim}{Claim}
-\numberwithin{claim}{subsection}
-
+  \newtheorem{defn}[theorem]{Definition}
+  \newtheorem{exmp}[theorem]{Example}
+  \newtheorem{obs}[theorem]{Observation}
+  \newtheorem{remark}[theorem]{Remark}
+  \newtheorem{construction}[theorem]{Construction}
 
 
 \title{Exploring Bounds}
@@ -64,23 +62,11 @@ For arbitrary $n$ and $d$, it is difficult to find $A_q(n,d)$ and $B_q(n,d)$ exa
 lower bounds---Gilbert and Varshamov---on these values.  The purpose of this
 paper is to take a survey of other well-known bounds in the literature that we have not discussed.  
 In the first part of the paper, we will consider the Plotkin Upper bound, 
-the Elias Upper bound, and the Linear Programming Upper Bound.  In the second part of the paper, we will consider asymptotic versions
-of Singleton, Plotkin, Hamming, and Elias.  (I am very certain that I won't get to discuss all of these bounds, but I am currently unsure how much space each discussion will take up so I've
-listed all that I am considering.)  For each bound, we will consider its proof as well
-as related examples.  Lastly, in the final part we will consider lexicodes, an interesting subset of linear codes that meet the Gilbert Bound.
-
-Some implementation specific details: for the Linear Programming bound, I will introduce basic linear programming concepts and as well as the Krawtchouck polynomials.  For the 
-Asymptotic Hamming bound I will introduce the Hilbert entropy function.  
-
+the Elias Upper bound.  In the second part of the paper, we will consider the asymptotic versions of the Singleton, Plotkin, and Elias bounds.  Lastly, in the final part we will consider lexicodes, an interesting subset of linear codes that meet the Gilbert Bound.
 
 \section{Upper Bounds}
 
 \subsection{Plotkin Upper Bound}
-%Plotkin
-%talk about importance
-%define it
-%prove it
-%work out some examples
 
 The Plotkin Bound is an upper bound that often improves upon the Sphere Packing Bound on $A_q(n,d)$.
 
@@ -169,36 +155,49 @@ Applying Sphere Packing, we have  $A_2(9,6) = A_2(8,5) \le \frac{2^8}{1+8+28}$, 
 Applying the Plotkin bound, we have $A_2(9,6) \le \frac{6}{6-\frac{1}{2}\cdot9} = \textbf{4}$.
 \end{exmp}
 
-Using MATLAB, I sought to visualize how the Plotkin and Sphere Packing bounds compare.  To do so, I plotted their values over $8\le n \le 25$, with $d>rn$.
+Using MATLAB, I sought to visualize how the Plotkin and Sphere Packing bounds compare.  To do so, I plotted their values over $8\le n \le 25$, with $d>rn$.  Below is the case
+of $q=2$; I found similar but more smoothed out results for higher values of $q$ (see submission folder).
 
-In order to turn my discrete 3d data into a smooth mesh surface, I needed a mechanism to smooth out my data.  My solution was to utilize Delaunay triangulation.
-
-It is also interesting to consider a broader picture of how Plotkin compares to Sphere Packing, Greismer, and other bounds we have considered in lecture.  Below is a graph comparing rates of codes versus the Sphere Packing and Plotkin bounds
-that we can calculate for those values for different values of q.  
-
-\begin{comment}
-\begin{figure}
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.8\linewidth]{plotkin_q2.png}
-  \caption{1a}
-  \label{fig:sfig1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=.8\linewidth]{plotkin_q3.png}
-  \caption{1b}
-  \label{fig:sfig2}
-\end{subfigure}
-\caption{plots of....}
-\label{fig:fig}
+\begin{figure}[ht]
+\includegraphics[width=.8\linewidth]{plotkin_q2.png}
+\caption{Plotkin and Sphere Packing bounds for $n,d\in[8,25]$}
 \end{figure}
-\end{comment}
+I also thought it would be interesting to visualize how the Plotkin bound and Sphere Packing bounds operate as a function of $n$ and $d$.  Given various values of $n$ and $d$, I plotted the resulting bound, 
+and then used Delaunay triangulation [REFERENCE] to turn the discrete 3D data into a smooth mesh surface.  (See Sphere Packing data on next page).  
+
+\begin{figure}
+\centering
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=1.4\linewidth]{plotkin.png}
+\label{fig:minipage1}
+\end{minipage}
+\quad
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=1.4\linewidth]{plotkin_2.png}
+\label{fig:minipage2}
+\end{minipage}
+\caption{Two different perspectives of the same graph, the Plotkin Bound for $q$=2, $n,d\in[6,40]$ }
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{minipage}[ht]{0.45\linewidth}
+\includegraphics[width=1.4\linewidth]{sp_1.png}
+\label{fig:minipage1}
+\end{minipage}
+\quad
+\begin{minipage}[ht]{0.45\linewidth}
+\includegraphics[width=1.4\linewidth]{sp_2.png}
+\label{fig:minipage2}
+\end{minipage}
+\caption{Two different perspectives of the same graph, the Sphere Packing Bound for $q$=2, $n,d\in[6,40]$ }
+\end{figure}
+
 
 \subsection{Elias Upper Bound}
 
 Another upper bound on $A_q(n,d)$ is due to Elias in 1960.  The Elias bound is generally weaker than other bounds we have discussed, but is important because of the asymptotic
-form of this bound that we will discuss towards the end of this paper.  
+form that it generates.
 
 In order to prove the Elias bound, two lemmas are necessary.
 
@@ -209,10 +208,22 @@ d\le \frac{Kw}{K-1}\left(2- \frac{w}{rn}\right).
 \end{equation}
 \end{lemma}
 
+The proof of this lemma uses a very similar technique to that used in our proof of the Plotkin bound. Just as before, given an $(n,K,d)$ code $\mathcal{C}$, the proof considers
+the $K \times n$ matrix $\mathcal{M}$ whose rows are the codewords of $\mathcal{C}$.  Using this matrix, the proof takes the expression $K(K-1)d$ and shows through a number of equation manipulations
+that it is less than or equal the expression $K^2 w\left( 2 - \frac{w}{rn}\right )$.  Two key tools for the proof are the Cauchy-Schwartz inequality, and the relationship between 
+the sum of the distances between all pairwise codewords and the sums of the $n_{i,\alpha}$ values in the columns of $\mathcal{M}$.
+
+As an aside: the second lemma, stated below, uses the notation $V_q(n,a)$ to denote the number of vectors in a sphere of radius $a$ in $\mathbb{F}_q^n$.  This is a concept 
+that we became very familiar with this semester in our discussions of the Sphere Packing and Gilbert bounds.
+
 \begin{lemma}
 Suppose C is an (n,M,d) code over $\mathbb{F}_q$.  Then there is an $(n,M,d)$ code $\mathcal{C}'$ over $\mathbb{F}_q$ with an (n,K,d) subcode $\mathcal{A}$ containing
 only codewords of weight at most w such that $K \ge M V_q(n,w) / q^n$.
 \end{lemma}
+
+The proof of this lemma begins by considering the intersection between a sphere of radius w centered at $\mathbf{0}$, and the special vector $x\in \mathbb{F}_q^n$ added to $\mathcal{C}$ such that the intersection
+is maximal.  The important step is noticing that this value is greater than or equal to the sum over all vectors $y\in\mathbb{F}_q^n$ of that same sphere of radius $w$, intersected with 
+$y+\mathcal{C}$, all divided by $q^n$.  The proof then uses sum manipulations to find a relationship between our original expression and $\frac{1}{q^n}V_q(n,w)M$.
 
 \begin{theorem}
 Let $r=  1-q^{-1}$.  Suppose that $w\le rn$ and $w^2 - 2rnw + rnd > 0$.  Then
@@ -221,6 +232,8 @@ Let $r=  1-q^{-1}$.  Suppose that $w\le rn$ and $w^2 - 2rnw + rnd > 0$.  Then
 A_q(n,d) \le \frac{rnd}{w^2 - 2rnw + rnd}\cdot \frac{q^n}{V_q(n,w)}.
 \end{equation}
 \end{theorem}
+
+The proof of this theorem, though omitted, follows almost directly from the previous two lemmas.
 
 We can work through a few examples to see how the Elias bound operates.
 
@@ -233,8 +246,21 @@ we get $A_2(13,5)\le \frac{.5\cdot13\cdot5}{.5\cdot13\cdot5}\cdot\frac{2^{13}}{V
 
  For $w=1$, 
 we get $A_2(13,5)\le \frac{.5\cdot13\cdot5}{1 - 2\cdot.5\cdot13 + .5\cdot13\cdot5}\cdot\frac{2^{13}}{V_q(13,1)} = \frac{32.5}{1-13+32.5}\cdot\frac{2^{13}}{1+13} = 927$;
-similarly $A_2(14,6)\le \frac{.5\cdot14\cdot6}{1 - 2\cdot.5\cdot14 + .5\cdot14\cdot6}\cdot\frac{2^{14}}{V_q(14,1)} = \frac{42}{1-14+42}\cdot\frac{2^{14}}{1+14} = 1581$;
+similarly $A_2(14,6)\le \frac{.5\cdot14\cdot6}{1 - 2\cdot.5\cdot14 + .5\cdot14\cdot6}\cdot\frac{2^{14}}{V_q(14,1)} = \frac{42}{1-14+42}\cdot\frac{2^{14}}{1+14} = 1581$.
 
+For $w=2$, 
+we get  $A_2(13,5)\le \frac{.5\cdot13\cdot5}{4 - 2\cdot2\cdot.5\cdot13 + .5\cdot13\cdot5}\cdot\frac{2^{13}}{V_q(13,2)} = \frac{32.5}{4-26+32.5}\cdot\frac{2^{13}}{1+13+78} = 275$;
+similarly $A_2(14,6)\le \frac{.5\cdot14\cdot6}{4 - 2\cdot2\cdot.5\cdot14 + .5\cdot14\cdot6}\cdot\frac{2^{14}}{V_q(14,2)} = \frac{42}{4-28+42}\cdot\frac{2^{14}}{1+14+91} = 360$.
+
+For $w=3$, 
+we get  $A_2(13,5)\le \frac{.5\cdot13\cdot5}{9 - 2\cdot3\cdot.5\cdot13 + .5\cdot13\cdot5}\cdot\frac{2^{13}}{V_q(13,3)} = \frac{32.5}{9-39+32.5}\cdot\frac{2^{13}}{1+13+78+286} = 281$;
+similarly $A_2(14,6)\le \frac{.5\cdot14\cdot6}{9 - 2\cdot3\cdot.5\cdot14 + .5\cdot14\cdot6}\cdot\frac{2^{14}}{V_q(14,3)} = \frac{42}{9-42+42}\cdot\frac{2^{14}}{1+14+91+ 364} = 162$.
+
+For $w=4$,
+in the case of $A_2(13,5)$, the first denominator is less than zero, and thus we cannot apply the bound; $A_2(14,6)$ still works, however.  
+$A_2(14,6)\le \frac{.5\cdot14\cdot6}{16 - 2\cdot4\cdot.5\cdot14 + .5\cdot14\cdot6}\cdot\frac{2^{14}}{V_q(14,4)} = \frac{42}{16-56+42}\cdot\frac{2^{14}}{1+14+91+ 364+1001} = 233$.
+
+Thus the best upper bound from the Elias Bound for $A_2(13,5)=A_2(14,6)=162$.
 
 \end{exmp}
 
@@ -255,7 +281,7 @@ for an $[n,k,d]$ linear code, $M = q^k$ and hence the rate is $k/n$ as we expect
 A second notion of goodness that we have discussed, but I think not formally defined, is the \textit{relative distance} of a code.  For a linear or nonlinear code of length n
 has minimum distance d, this value is the ratio $d/n$. 
 
-Consequently, for our asymptotic bounds, we are interested in the largest
+For our asymptotic bounds, we are interested in the largest
 possible rate for a family of codes over $\mathbb{F}_q$ of lengths going to
 infinity with a relative distance of some constant $\delta$.  In other words, we consider the equation:
 
@@ -267,7 +293,7 @@ To better understand what is going on here, consider the case of an $[n,k,d]$ li
 $n$ and $d$.  Now, we want to know how large we can get $\frac{k}{n}$ given $\frac{d}{n}=\delta$ as $n\to\infty$.  This idea generalizes to non-linear codes as 
 in the non-asymptotic cases we discussed in class.
 
-For the rest of this section, we will consider some bounds on $A_q(n,\delta n)$
+For the rest of this section, we will consider two bounds on $A_q(n,\delta n)$
 
 \subsection{Asymptotic Singleton Bound}
 
@@ -295,20 +321,43 @@ If $0 \le \delta \le 1$, then $\alpha_q(\delta) \le 1 - \delta$.
 \end{equation}
 \end{proof}
 
-
-\begin{exmp}
-
-\end{exmp}
-
-
 \subsection{Asymptotic Plotkin Bound}
+The Asymptotic Plotkin Bound gives a small improvement on the Asymptotic Single Bound.  
+
+\begin{theorem}
+Let $r=1-q$.  Then 
+\begin{equation*}
+\alpha_q(\delta)= 
+\begin{cases} 0, &\mbox r\le\delta\le1 \\ 1-\delta/r, &\mbox{} 0\le\delta < r. \end{cases}
+\end{equation*}
+\end{theorem}
+
+\begin{proof}[Sketch of proof]
+First, consider the case of $r\le\delta\le1$.  Notice that we can apply the Plotkin bound directly, as $rn < \delta n = d$.  By the Plotkin Bound, $A_q(n,\delta n) \le \frac{\delta n}{\delta n - rn}$.  Cancelling
+out the common $n$, we get $A_q(n,\delta n) \le \frac{\delta}{\delta - r}$.  Since this value is independent of $n$, it immediately follows from the definition that $\alpha_q(\delta)=0$.
+
+Next, consider the case of $0\le\delta < r$.  Suppose that $\mathcal{C}$ is an $(n,M,\delta n)$ code where $M=A_q(n,\delta n)$ .  Our goal is to puncture $\mathcal{C}$ such that 
+we get a shorter length code $\mathcal{C}'$ with the same minimum distance as $\mathcal{C}$.  The idea is to find a code whose $n$ is small enough that we can still apply the Plotkin bound, and then bound
+our original code $\mathcal{C}$ with the shortened code's Plotkin value.
+Use a shortening technique analgous to the one we described in lecture, as well as Section 1.5.3 of the textbook,
+let $\mathcal{C}'$ be the $(n',M',\delta n)$ code where $n' = \lfloor (\delta n -1)/ r \rfloor$ and $M' \ge M/q^{n-n'}$.  Given this code, we can show that $A_q(n,\delta n) \le q^{n-n'} \delta n$.
+Simplifying using the definition of $\alpha_q(\delta)$ completes the proof.
+\end{proof}
+
+Once again, we use MATLAB to visually compare two bounds.  This time, we consider the Asymptotic Singleton and Asymptotic Plotkin bounds.  
+
+\begin{figure}[ht]
+\includegraphics[width=.8\linewidth]{asympt.png}
+\caption{Asymptotic Plotkin and Singleton bounds for $q=2$}
+\end{figure}
 
 \section{Lexicodes}
-We end our discussion on bounds with an interesting class of binary linear codes
+
+We end our discussion on bounds with an interesting class of linear codes
 called lexicodes, short for lexicographic codes.  Lexicodes are linear and meet the Gilbert bound; we will discuss the former and prove the latter.  Note that for this discussion we are 
 solely working in $\mathbb{F}_2$.
 
-We construct the lexicode $\mathcal{L}$ of length $n$ and minimum distance $d$ using a basic greedy algorithm as follows.  First, order all $n$-tuples in an array $A$ in lexicographic order:
+We construct the lexicode $\mathcal{L}(n,d)$ of length $n$ and minimum distance $d$ using a basic greedy algorithm as follows.  First, order all $n$-tuples in an array $A$ in lexicographic order:
 $A[0] = 0\cdots000$, $A[1]=0\cdots001$, $A[2]0\cdots010$, $A[3]=0\cdots011$, \ldots, $A[2^n-1] = 1\cdots111$.  Put the first vector from  $A$ (always the $\mathbf{0}$ vector) in $\mathcal{L}$.  Next, find the first vector $\mathbf{x}$
 of weight $d$ in the lexicographic ordering, and put it in $\mathcal{L}$.  Then, find the next vector in the lexicographic ordering in $A$ whose distance from each vector in $\mathcal{L}$ is 
 $d$ or more and add it to $\mathcal{L}$.  Repeat this process until you have scanned through all of $A$ once.
@@ -320,7 +369,7 @@ but stopping at the right spots.
 After constructing $\mathcal{L}$ as above, label the vectors $\mathbf{c}_0$, $\mathbf{c}_1,$ $\ldots$ in the order they were selected such that $\mathbf{c}_0$ is the $\mathbf{0}$ 
 vector.
 
-\begin{enumerate}
+\begin{enumerate}[{\normalfont (i)}]
 \item $\mathcal{L}$ is a linear code and the vectors $\mathbf{c}_{2^i}$ are a basis of $\mathcal{L}$.  
 \item After $\mathbf{c}_{2^i}$ is chosen, the next $2^i -1$ vectors can be rewritten as $\mathbf{c}_1 + \mathbf{c}_{2^i}$, $\mathbf{c}_2 + \mathbf{c}_{2^i}$, $\ldots$, 
 $\mathbf{c}_{2^i -1} + \mathbf{c}_{2^i}$.
@@ -330,23 +379,23 @@ $\mathbf{c}_{2^i -1} + \mathbf{c}_{2^i}$.
 
 \end{theorem}
 
-Though I won't prove this, it is not difficult to see that $1.$ and $3.$ follow from $2.$    In $2.$, we are showing that all codewords in the lexicode are simply linear combinations of 
-the $c_{2^i}$ codewords, hence making the $c_{2^i}$ codewords a basis for the code.
+I claim that (i) and (iii) follow from (ii).  For (ii), we are showing that all codewords in the lexicode are simply linear combinations of 
+the $c_{2^i}$ codewords, hence making the $c_{2^i}$ codewords a basis for the code.  The sketch of the proof for (ii) involves inducting on $i$.  Essentially, the proof works
+by assuming that the second $2^{i}$ vectors in $\mathcal{L}_{i+1}$ are not necessarily generated by adding $\mathbf{c}_2^{i}$ to each of the previously chosen vectors
+in $\mathcal{L}_i$.  If you break this assumption, then you can use the notion of lexicographic order to find two vectors lexicographically ordered in a way that is not actually
+possible.
 
 The codes $\mathcal{L}_i$ satisfy the inclusions $\mathcal{L}_1 \subset \mathcal{L}_2 \subset \cdots \subset \mathcal{L}_k = \mathcal{L}$, where $k$ is the dimension of 
 $\mathcal{L}$.  In general, this dimension value $k$ is not known until you have completed the construction as described above.
+
+We now consider a basic example of a lexicode $\mathcal{L}(n,d)$ and it's $\mathcal{L}_{i}$s.
 
 \begin{exmp}
 Consider the codes $\mathcal{L}_i$ of length $5$ and minimum distance $2$.  First, we must construct the entire lexicode $\mathcal{L}$.  To do so, we enumerate
 all 32 vectors of $\mathbb{F}_2^5$ in lexicographic order: $00000$,$00001$,$00010$,$\ldots$,$11111$.  We find that $\mathcal{L} = \{00000, 00011,00101,00110,01001,
 01010,01100,01111,10001,10010,\\ 10100,10111,11000,11011,11101,11110\}$.  As a sanity check, note that $\left | \mathcal{L} \right | = 16$, a power of $q$.  Consequently, we have
 $\mathcal{L}_1 = \{00000,00011\}$, $\mathcal{L}_2 = \{00000, 00011,00101,\\ 00110\}$, $\mathcal{L}_3 = \{00000, 00011,00101,00110,01001,01010,01100,01111\}$, and
-$\mathcal{L}_4 = \mathcal{L}$. We can check to make sure that each $\mathbf{c}_j$ is a linear combination of the $\mathbf{c}_{2^i}$s. For this example, consider $\mathcal{L}_3$:  
-
-Notice that this is simply the even weight vectors.  In fact, it is true that
-for any $q$.
-THIS IS THE EVEN WEIGHT CODE! prove it.
-
+$\mathcal{L}_4 = \mathcal{L}$. We can check to make sure that each $\mathbf{c}_j$ is a linear combination of the $\mathbf{c}_{2^i}$s. For this example, consider $\mathcal{L}_3$:
 
 \begin{enumerate}%[start=0]
 \item $\mathbf{c}_0$ is the trivial linear combination.
@@ -393,11 +442,8 @@ certainly be greater than or equal to the number of spheres around codewords.
 Hence, $\mathcal{C}$ meets the Gilbert bound.
 \end{proof} 
 
-Some notable codes we have discussed in class are in fact lexicodes.
-[REFERENCE]
-
-We can prove a basic property of binary Lexicodes.  First, though, we
-need an important definition.  
+It may be surprising to discover that many codes we have already discussed in lecture are in fact lexicodes.  In order to have this discussion, though, we
+first need two important definitions.
 
 \begin{defn}
 The $\mathbf{nim-sum}$ NS($v$) of a vector $v \in \mathbb{F}_2^n$ is the sum of
@@ -409,8 +455,20 @@ A vector $v\in \mathbb{F}_2^n$ is $\mathbf{zero-sum}$ if NS($v$)=0.
 \end{defn}
 
 We have used the idea of nim-sums and zero-sums throughout the course, but instead we have
-referred to this notion in terms of being even-like or odd-like.  This is the
-exact same notion, only in different terms.
+used the terms even-like or odd-like.  In the binary case, these are equivalent notions.
+
+We also need the following Lemma:
+
+\begin{lemma}
+The codewords of the lexicode $\mathcal{L}(n,d)$ are also in the lexicode $\mathcal{L}(n+1,d)$, except with an additional leading zero.
+\end{lemma}
+
+\begin{proof}
+This follows directly from how our algorithm above was constructed.  We obviously have $\mathbb{F}_q^n \subset \mathbb{F}_q^{n+1}$, and in our algorithm these will be
+the first $2^n$ vectors that are visited.  Since all that has changed is we've added a leading $0$, the algorithm will choose these same vectors $\mathcal{L}(n,d)$ vectors.
+\end{proof}
+
+In lecture, we have frequently discussed the code of all even-weight codewords.  In $\mathbb{F}_2$, this is a lexicode.
 
 \begin{claim}
 For $d=q=2$, $\forall v\in \mathcal{L}$, NS($v$) $= 0$, and hence $\mathcal{L}$ is an even-like code.
@@ -418,77 +476,34 @@ For $d=q=2$, $\forall v\in \mathcal{L}$, NS($v$) $= 0$, and hence $\mathcal{L}$ 
 
 \begin{proof}
 We will prove this by inducting on $n$.  In the base case of $n=1$,
-$\mathcal{L}=\{0\}$, which is trivially zero-sum.  Assume that for the
-lexicode of length $n$, which we will denote $\mathcal{L}(n)$, all codewords are zero-sum.  Now, we must show that all
-the codewords in $\mathcal{L}(n+1)$ are zero-sum as well.  First, note that all
-codewords in $\mathcal{L}(n)$ are also in $\mathcal{L}(n+1)$, except with an
-extra leading zero.  By our assumption, these codewords are still zero-sum, as
-adding a zero in front will not change the nim-sum calculation.
-Now, we must show that any vector we can add to this set as prescribed by our
-algorithm must necessarily be a zero-sum vector as well.  
+$\mathcal{L}=\{0\}$, which is trivially zero-sum.  
 
-Since $\mathcal{L}(n)$ is contained in $\mathcal{L}(n+1)$, we begin our construction of $\mathcal{L}(n+1)$ with the elements of $\mathcal{L}(n)$.  Any new elements
-we will add must have a $1$ in the leading coordinate as we have maxed out our possibilities for $\mathcal{L}(n)$, and so lexicographically this makes sense as the new vectors we now need to consider will be `larger' than the ones
-we have already added in to $\mathcal{L}(n+1)$. 
+Assume that, for the lexicode of length $n$, all codewords are zero-sum.  Now, we must show that all
+the codewords in $\mathcal{L}(n+1,2)$ are zero-sum as well.  By our lemma, all codewords in $\mathcal{L}(n,2)$ are also in $\mathcal{L}(n+1,2)$, except with an
+extra leading zero.  By our assumption, these codewords are still zero-sum, as adding a zero in front will not change the nim-sum calculation.
 
--If you approach an odd-weight vector that you can add, then there is even-weight vector that comes one before it that you should have added instead.
+Let ${\mathbb{F}_q^n}^*$ be the vectors of $\mathbb{F}_q^n$ with a zero appended in front of the first coordinate.  Now, we must show that for the remaining vectors $v\in\mathbb{F}_q^{n+1} \setminus {\mathbb{F}_q^{n}}^*$that we have not yet visited, our algorithm will choose all
+even-weight vectors and none of the odd-weight vectors.  
 
+First, consider the odd-weight vectors of $\mathbb{F}_q^{n+1} \setminus {\mathbb{F}_q^{n}}^*$.  Note that 
+these are actually just the even weight vectors of $\mathbb{F}_q^n$ with a $1$ appended to the front.  If you flip the first bit of each vector, you get an even weight codeword that
+we have already shown to be in $\mathcal{L}(n+1,2)$, and consequently no such odd-weight codeword can be in $\mathbb{L}(n+1,2)$.
 
--SHIT! if it is odd weight, then by definition that means that has a 1 in the leading column plus an even weight vector from $\mathcal{L}(n)$!!!!  That vector must necessarily be 
-distance 1 away from a vector in $\mathcal{L}(n)$, and thus cannot be added to $\mathcal{L}(n+1)$.  All even weight vectors will have a $1$ in the leading coordinate and then
-an odd number of $1$s in the next $n$ coordinates.  No odd numbers are in $\mathcal{L}(n)$, and so you will be at least distance one from all vectors already from $\mathcal{L}(n)$.
-So you get one component of your distance from the leading coordinate and at least one component of distance from you the last $n$ coordinates.  This completes the 
-proof!
+Finally, consider the even-weight vectors of $\mathbb{F}_q^{n+1} \setminus {\mathbb{F}_q^{n}}^*$.  Notice that these are just the odd-weight vectors of $\mathbb{F}_q^n$ with a $1$
+appended to the front.  By our assumption, none of the odd-weight vectors of ${\mathbb{F}_q^n}^*$ are in $\mathcal{L}(n+1,2)$.  This means that each even-weight
+vector in $\mathbb{F}_q^{n+1} \setminus {\mathbb{F}_q^{n}}^*$ will necessarily have distance $2$ from vectors in $\mathcal{L}(n,2)$ (with a zero appended to the front).  We also
+have that any two distinct even-weight vectors are at least distance $2$ from one another, as an even-weight vector can only possibly have distance one from an odd-weight vector.  
+Hence, all even-weight vectors of $\mathbb{F}_q^{n+1} \setminus {\mathbb{F}_q^{n}}^*$ will be chosen by our algorithm.
 \end{proof}
 
-
-For example, the binary lexicodes with $d$=3 and $n=2^m-1$ are the binary hamming codes.  It can be quite
-tedious to compute and confirm something like this by hand, so I wrote a short C++ program that implements the Lexicode algorithm as described above.  
+We have also frequently discussed the Hamming codes.  In (insert reference to Greedy Codes paper), they show that the binary lexicodes with $d$=3 and $n=2^m-1$ are the Hamming codes, 
+and similarly, as one might expect considering the previous statement, the binary lexicodes with $d=4$ and $n=2^m$ are the extended Hamming codes.  We can check
+this with a simple example.
 
 \begin{exmp}
-Let $n=7$, $d=3$.  We find $\mathcal{L}= \{0000000,000111,  \}$
+Let $n=7$, $d=3$.  It can be quite tedious to compute and confirm something like this by hand, so I wrote a short C++ program that implements the Lexicode algorithm as described above.  We find $\mathcal{L}(7,3)$ to be $\{0,7,25,30,42,45,51,52,75,76,82,85,97,102,120,127\}$ where the binary vectors are given by their decimal representation.
 \end{exmp}
 
-
-
-Need to talk about paper
-http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1057187
-
-
-
-
-%First explore linear programming bound
-Asymptotic singleton, include 2 examples
-Asymptotic plotkin, some examples
-draw graph
-Asymptotic hamming
-	define hilbert, prove 135,136, define vq(n,a),
-	black box 2.10.3, prove 2.10.5
-
-
-Table of common$a_q(n,d)$ values
-Recall basic theory: thm 2.1.2, 2.1.6
-
-Sections
-
-
-Elias
-talk about importance
-define it
-prove two lemmas that do the heavy lifting
-easy proof to finish it off
-work out some examples
-
-Linear Programming Bound
-talk about importance
-define it
-prove it
-work out some examples
-
-
-Note existence of two lower bounds, say we talked about them in class
-
-
-
+Note that $\mathcal{L}(7,3)$ has $16$ codewords, making it a $[7,4,3]$ code.  Recall that in lecture we proved that all $[7,4,3]$ codes are the Hamming(7,4) code.  
 
 \end{document}

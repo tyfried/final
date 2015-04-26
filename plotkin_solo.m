@@ -1,5 +1,5 @@
 syms k;
-for q = 2:5
+for q = 2:2
     r = 1-1/q;
     %data_sp_gr = zeros(100000,3);
     data_plt = zeros(100000,3);
@@ -7,7 +7,7 @@ for q = 2:5
     %count_sp = 1;
     count_plt = 1;
     
-   for n = 8:25
+   for n = 6:40
        for d=(floor(r*n)+1):n
            t = floor((d-1)/2);
            %sp = (q^n)/symsum(nchoosek(n,k)*(q-1)^k,0,t);
@@ -25,6 +25,9 @@ for q = 2:5
    
    figure;
    trisurf(tri,data_plt(1:count_plt,1),data_plt(1:count_plt,2),data_plt(1:count_plt,3));
+   xlabel('n');
+   ylabel('d');
+   zlabel('bound');
    axis vis3d
    
 %    figure;
